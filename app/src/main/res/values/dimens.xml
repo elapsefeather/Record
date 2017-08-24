@@ -1,0 +1,35 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="view_margin">10dp</dimen>
+
+    <!-- login -->
+    <dimen name="login_margin">3dp</dimen>
+
+    <!--main-->
+    <dimen name="main_image_wh">50dp</dimen>
+    <dimen name="main_textsize">16dp</dimen>
+    <!--main btn-->
+    <dimen name="main_btn_radius">10dp</dimen>
+    <dimen name="main_btn_padding">5dp</dimen>
+    <dimen name="main_btn_margin">5dp</dimen>
+
+    <!-- enter dialog -->
+    <dimen name="enterdialog_hight">420dp</dimen>
+    <dimen name="enterdialog_width">330dp</dimen>
+    <dimen name="enterdialog_margin">15dp</dimen>
+    <dimen name="enterdialog_radius">10dp</dimen>
+    <dimen name="enterdialog_line_marign">3dp</dimen>
+    <dimen name="enterdialog_line_hight">26dp</dimen>
+    <dimen name="enterdialog_line_padding">3dp</dimen>
+    <dimen name="enterdialog_note_hight">60dp</dimen>
+    <dimen name="enterdialog_check_hight">40dp</dimen>
+
+    <!-- details -->
+    <dimen name="details_line_marign">2dp</dimen>
+    <dimen name="details_text_size">16dp</dimen>
+    <dimen name="details_item_marign">5dp</dimen>
+    <dimen name="details_spinner_drop">25dp</dimen>
+
+</resources>
