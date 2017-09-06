@@ -45,7 +45,6 @@ public class DetailsActivity extends AppCompatActivity {
         detailsPresenter = new DetailsPresenter(this);
 
         spinner_year = (Spinner) findViewById(R.id.details_spinner_year);
-        spinner_year.setSelection(2,true);
         spinner_year.setAdapter(detailsPresenter.yearAdapter);
         spinner_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -71,15 +70,6 @@ public class DetailsActivity extends AppCompatActivity {
 
 
         spinner_month = (Spinner) findViewById(R.id.details_spinner_month);
-        //        預設 month
-        for (int i = 0; i < detailsPresenter.detilsModel.month.size(); i++) {
-            if (MM == detailsPresenter.detilsModel.month.get(i)) {
-                spinner_month.setSelection(i, false);
-                detailsPresenter.detilsModel.month_item = MM;
-                Log.i("spinner", "spinner_month.setSelection =  " + i);
-                break;
-            }
-        }
         spinner_month.setAdapter(detailsPresenter.monthAdapter);
         spinner_month.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -103,11 +93,22 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
-
         exlistview = (ExpandableListView) findViewById(R.id.details_exlistview);
         exlistview.setAdapter(detailsPresenter.detilsAdapter);
 
     }
+     public void setSpinnerSelection(){
+
+         //        預設 year
+         spinner_year.setSelection(2);
+         //        預設 month
+         for(int i = 0;i<detailsPresenter.detilsModel.month.size();i++)
+         {
+             if(MM.equals(detailsPresenter.detilsModel.month.get(i))){
+                 spinner_month.setSelection(i);
+             }
+         }
+     }
 
     public void getfirstdata() {
         new AsyncTask<Void, Void, Void>() {
@@ -132,6 +133,8 @@ public class DetailsActivity extends AppCompatActivity {
                 super.onPostExecute(i);
                 Log.i("notify", "onPostExecute");
                 detailsPresenter.notifyfirst();
+                setSpinnerSelection();//spinner預設
+
                 progressStop();
             }
         }.execute(null, null, null);

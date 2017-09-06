@@ -33,7 +33,7 @@ public class DetilsModel {
 
     public void getYear() {
 
-        for (int i = Integer.parseInt(year_item)-2; i <= Integer.parseInt(year_item)+2; i++) {
+        for (int i = Integer.parseInt(year_item)-2; i <= Integer.parseInt(year_item); i++) {
             year.add("" + i);
         }
         for (int i = 1; i <= 12; i++) {
@@ -51,7 +51,6 @@ public class DetilsModel {
         Log.i("model", "m(i) = " + month_item);
         MainActivity.myRef = FirebaseDatabase.getInstance().getReferenceFromUrl(API.firebase_data)
                 .child("Info").child(year_item).child(month_item);
-
         MainActivity.myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
