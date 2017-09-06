@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //日期
     public static String today = "", yy = "", mm = "", dd = "";
-    int yi, di, mi;
+    public static int yi, di, mi;
 
 
     @Override

@@ -29,7 +29,6 @@ public class CostDialog extends Activity implements View.OnClickListener {
 
     //日期
     String yy = "", mm = "", dd = "", setdate = "";
-    int yi, di, mi;
 
     //spinner
     int sp;
@@ -46,6 +45,7 @@ public class CostDialog extends Activity implements View.OnClickListener {
     }
 
     public void init() {
+
         date = (TextView) findViewById(R.id.dialog_cost_date);
         date.setText(MainActivity.today);
         date.setOnClickListener(this);
@@ -84,8 +84,7 @@ public class CostDialog extends Activity implements View.OnClickListener {
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
 
         @Override
-        public void onDateSet(DatePicker view, int year, int month,
-                              int day) {
+        public void onDateSet(DatePicker view, int year, int month,int day) {
             yy = String.valueOf(year);
             mm = String.valueOf(month + 1);
             dd = String.valueOf(day);
@@ -108,7 +107,7 @@ public class CostDialog extends Activity implements View.OnClickListener {
 
             case R.id.dialog_cost_date:
 
-                new DatePickerDialog(this, d, yi, mi, di).show();
+                new DatePickerDialog(this, d, MainActivity.yi, MainActivity.mi,MainActivity. di).show();
 
                 break;
             case R.id.dialog_cost_check:

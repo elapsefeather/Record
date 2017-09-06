@@ -108,7 +108,7 @@ public class EarnDialog extends Activity implements View.OnClickListener {
 
             case R.id.dialog_earn_date:
 
-                new DatePickerDialog(this, d, yi, mi, di).show();
+                new DatePickerDialog(this, d, MainActivity.yi, MainActivity.mi, MainActivity.di).show();
 
                 break;
             case R.id.dialog_earn_check:
