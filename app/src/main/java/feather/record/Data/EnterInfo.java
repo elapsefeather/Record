@@ -6,17 +6,15 @@ package feather.record.Data;
 
 public class EnterInfo {
 
-    String item, date, name, option, money, note;
+    String item, year, month, day, name, option, money, note;
+    long id;
 
-    public EnterInfo(String item, String date, String name, String option, String money, String note) {
+    public long getId() {
+        return id;
+    }
 
-        this.item = item;
-        this.date = date;
-        this.name = name;
-        this.option = option;
-        this.money = money;
-        this.note = note;
-
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getItem() {
@@ -27,12 +25,28 @@ public class EnterInfo {
         this.item = item;
     }
 
-    public String getDate() {
-        return date;
+    public String getYear() {
+        return year;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 
     public String getName() {
