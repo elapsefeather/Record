@@ -15,23 +15,31 @@ import java.util.Calendar;
 import feather.record.Context.Details.DetailsActivity;
 import feather.record.Context.Login.LoginActivity;
 import feather.record.Other.API;
+import feather.record.Other.DB_Helper;
 import feather.record.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     LinearLayout earn, cost, details, chart, logout;
+
+//    SQLite
+    public static DB_Helper helper;
+
     //    firebase database
     public static DatabaseReference myRef;
 
     //日期
     public static String today = "", yy = "", mm = "", dd = "";
-    public static int yi, di, mi;
+    int yi, di, mi;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        helper = new DB_Helper(this, "expense.db", null, 1);
+
         getdate();
         init();
     }

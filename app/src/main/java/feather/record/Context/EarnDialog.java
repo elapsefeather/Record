@@ -2,6 +2,7 @@ package feather.record.Context;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import feather.record.Data.EnterInfo;
+import feather.record.Other.DB_Helper;
 import feather.record.R;
 
 public class EarnDialog extends Activity implements View.OnClickListener {
@@ -26,14 +28,14 @@ public class EarnDialog extends Activity implements View.OnClickListener {
     Button check;
     Spinner option;
     String name = "";
-
+    String notest, moneyst;
     //日期
     String yy = "", mm = "", dd = "", setdate = "";
     int yi, di, mi;
 
     //spinner
     int sp;
-    String[] option_list = {"開箱"};
+    String[] option_list = {"開箱", "增資"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,14 @@ public class EarnDialog extends Activity implements View.OnClickListener {
     }
 
     public void init() {
+
+        yy = MainActivity.yy;
+        mm = MainActivity.mm;
+        dd = MainActivity.dd;
+
+        yi = Integer.parseInt(yy);
+        mi = Integer.parseInt(mm) - 1;
+        di = Integer.parseInt(dd);
 
         date = (TextView) findViewById(R.id.dialog_earn_date);
         date.setText(MainActivity.today);
@@ -90,10 +100,10 @@ public class EarnDialog extends Activity implements View.OnClickListener {
             mm = String.valueOf(month + 1);
             dd = String.valueOf(day);
 
-            if (mm.length() < 2) {
+            if (month < 9) {
                 mm = "0" + mm;
             }
-            if (dd.length() < 2) {
+            if (day < 10) {
                 dd = "0" + dd;
             }
             setdate = yy + "-" + mm + "-" + dd;
@@ -108,24 +118,26 @@ public class EarnDialog extends Activity implements View.OnClickListener {
 
             case R.id.dialog_earn_date:
 
-                new DatePickerDialog(this, d, MainActivity.yi, MainActivity.mi, MainActivity.di).show();
+                new DatePickerDialog(this, d, yi, mi, di).show();
 
                 break;
             case R.id.dialog_earn_check:
 
-                String datest = date.getText().toString().trim();
-                String moneyst = money.getText().toString().trim();
-                String notest = note.getText().toString().trim();
+                moneyst = money.getText().toString().trim();
+                notest = note.getText().toString().trim();
                 if (!moneyst.equals("")) {
-                    EnterInfo enter = new EnterInfo("earn", datest, name, option_list[sp], moneyst, notest);
-                    MainActivity.myRef.child("Info").child(yy).child(mm).push().setValue(enter);
+                    Log.i("earn", "yy = " + yy);
+                    Log.i("earn", "mm = " + mm);
+                    Log.i("earn", "dd = " + dd);
+                    Log.i("earn", "moneyst = " + moneyst);
+                    MainActivity.helper.Add(
+                            "earn", yy, mm, dd, name, option_list[sp], moneyst, notest);
                 }
                 finish();
                 break;
 
         }
     }
-
 
     private void ReadUserInfo() {
 

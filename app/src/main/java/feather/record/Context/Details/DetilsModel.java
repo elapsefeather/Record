@@ -33,7 +33,7 @@ public class DetilsModel {
 
     public void getYear() {
 
-        for (int i = Integer.parseInt(year_item)-2; i <= Integer.parseInt(year_item); i++) {
+        for (int i = Integer.parseInt(year_item) - 2; i <= Integer.parseInt(year_item) + 2; i++) {
             year.add("" + i);
         }
         for (int i = 1; i <= 12; i++) {
@@ -46,44 +46,11 @@ public class DetilsModel {
     }
 
     public void getData() {
+
         list.clear();
-        Log.i("model", "y(i) = " + year_item);
-        Log.i("model", "m(i) = " + month_item);
-        MainActivity.myRef = FirebaseDatabase.getInstance().getReferenceFromUrl(API.firebase_data)
-                .child("Info").child(year_item).child(month_item);
-        MainActivity.myRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                Object i = dataSnapshot.getValue();
-                String item = dataSnapshot.child("item").getValue().toString();
-                String date = dataSnapshot.child("date").getValue().toString();
-                String name = dataSnapshot.child("name").getValue().toString();
-                String option = dataSnapshot.child("option").getValue().toString();
-                String money = dataSnapshot.child("money").getValue().toString();
-                String note = dataSnapshot.child("note").getValue().toString();
-
-                EnterInfo info = new EnterInfo(item, date, name, option, money, note);
-                list.add(info);
-                Log.i("info", " " + item + " " + date + " " + name + " " + option + " " + money + " " + note);
-                detailsPresenter.notifyData();//新資料更新
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+        Log.i("getData", "year_item = " + year_item + " month_item = " + month_item);
+        list = MainActivity.helper.Select(year_item, month_item);
+        Log.i("getData","list = " + list);
     }
 
 }

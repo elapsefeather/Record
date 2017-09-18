@@ -26,13 +26,15 @@ public class CostDialog extends Activity implements View.OnClickListener {
     Button check;
     Spinner option;
     String name = "";
+    String notest, moneyst;
 
     //日期
     String yy = "", mm = "", dd = "", setdate = "";
+    int yi, di, mi;
 
     //spinner
     int sp;
-    String[] option_list = {"進貨", "預支"};
+    String[] option_list = {"進貨", "提款"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,14 @@ public class CostDialog extends Activity implements View.OnClickListener {
     }
 
     public void init() {
+
+        yy = MainActivity.yy;
+        mm = MainActivity.mm;
+        dd = MainActivity.dd;
+
+        yi = Integer.parseInt(yy);
+        mi = Integer.parseInt(mm) - 1;
+        di = Integer.parseInt(dd);
 
         date = (TextView) findViewById(R.id.dialog_cost_date);
         date.setText(MainActivity.today);
@@ -84,15 +94,16 @@ public class CostDialog extends Activity implements View.OnClickListener {
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
 
         @Override
-        public void onDateSet(DatePicker view, int year, int month,int day) {
+        public void onDateSet(DatePicker view, int year, int month,
+                              int day) {
             yy = String.valueOf(year);
             mm = String.valueOf(month + 1);
             dd = String.valueOf(day);
 
-            if (mm.length() < 2) {
+            if (month < 9) {
                 mm = "0" + mm;
             }
-            if (dd.length() < 2) {
+            if (day < 10) {
                 dd = "0" + dd;
             }
             setdate = yy + "-" + mm + "-" + dd;
@@ -107,17 +118,16 @@ public class CostDialog extends Activity implements View.OnClickListener {
 
             case R.id.dialog_cost_date:
 
-                new DatePickerDialog(this, d, MainActivity.yi, MainActivity.mi,MainActivity. di).show();
+                new DatePickerDialog(this, d, yi, mi, di).show();
 
                 break;
             case R.id.dialog_cost_check:
 
-                String datest = date.getText().toString().trim();
-                String moneyst = money.getText().toString().trim();
-                String notest = note.getText().toString().trim();
+                moneyst = money.getText().toString().trim();
+                notest = note.getText().toString().trim();
                 if (!moneyst.equals("")) {
-                    EnterInfo enter = new EnterInfo("cost", datest, name, option_list[sp], "-" + moneyst, notest);
-                    MainActivity.myRef.child("Info").child(yy).child(mm).push().setValue(enter);
+                    MainActivity.helper.Add(
+                            "cost", yy, mm, dd, name, option_list[sp], moneyst, notest);
                 }
                 finish();
 

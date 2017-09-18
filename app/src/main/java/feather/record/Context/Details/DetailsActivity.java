@@ -37,12 +37,13 @@ public class DetailsActivity extends AppCompatActivity {
 
     public void init() {
 
+        detailsPresenter = new DetailsPresenter(this);
+        detailsPresenter.detilsModel.year_item = MainActivity.yy;
+        detailsPresenter.detilsModel.month_item = MainActivity.mm;
         YY = MainActivity.yy;
         MM = MainActivity.mm;
 
         nodata = (TextView) findViewById(R.id.details_nodata);
-
-        detailsPresenter = new DetailsPresenter(this);
 
         spinner_year = (Spinner) findViewById(R.id.details_spinner_year);
         spinner_year.setAdapter(detailsPresenter.yearAdapter);
@@ -97,22 +98,10 @@ public class DetailsActivity extends AppCompatActivity {
         exlistview.setAdapter(detailsPresenter.detilsAdapter);
 
     }
-     public void setSpinnerSelection(){
-
-         //        預設 year
-         spinner_year.setSelection(2);
-         //        預設 month
-         for(int i = 0;i<detailsPresenter.detilsModel.month.size();i++)
-         {
-             if(MM.equals(detailsPresenter.detilsModel.month.get(i))){
-                 spinner_month.setSelection(i);
-             }
-         }
-     }
 
     public void getfirstdata() {
-        new AsyncTask<Void, Void, Void>() {
 
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -133,11 +122,33 @@ public class DetailsActivity extends AppCompatActivity {
                 super.onPostExecute(i);
                 Log.i("notify", "onPostExecute");
                 detailsPresenter.notifyfirst();
-                setSpinnerSelection();//spinner預設
-
+                detailsPresenter.notifyData();
+                setSelction();
                 progressStop();
             }
         }.execute(null, null, null);
+    }
+
+    public void setSelction() {
+        //        預設 year
+//        spinner_year.setSelection(2, false);
+        for (int i = 0; i < detailsPresenter.detilsModel.year.size(); i++) {
+            if (YY.equals( detailsPresenter.detilsModel.year.get(i))) {
+                spinner_year.setSelection(i, false);
+                detailsPresenter.detilsModel.year_item = YY;
+                Log.i("spinner", "spinner_year.setSelection =  " + i);
+                break;
+            }
+        }
+        //        預設 month
+        for (int i = 0; i < detailsPresenter.detilsModel.month.size(); i++) {
+            if (MM.equals( detailsPresenter.detilsModel.month.get(i))) {
+                spinner_month.setSelection(i, false);
+                detailsPresenter.detilsModel.month_item = MM;
+                Log.i("spinner", "spinner_month.setSelection =  " + i);
+                break;
+            }
+        }
     }
 
     public void progressStart() {

@@ -10,7 +10,7 @@ import feather.record.Context.MainActivity;
 import feather.record.Data.UserInfo;
 
 /**
- * Created by feather on 2017/8/9.
+ * Created by lycodes on 2017/8/9.
  */
 
 public class LoginPresenter {

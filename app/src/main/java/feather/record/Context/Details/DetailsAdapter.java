@@ -120,7 +120,7 @@ public class DetailsAdapter extends BaseExpandableListAdapter {
     }
 
     private class groupView {
-        TextView date, money,item;
+        TextView date, money, item;
 
         public groupView(View view) {
             date = (TextView) view.findViewById(R.id.details_item_group_date);
@@ -150,7 +150,7 @@ public class DetailsAdapter extends BaseExpandableListAdapter {
     }
 
     public String getDate(int i) {
-        return list.get(i).getDate();
+        return list.get(i).getYear() + " - " + list.get(i).getMonth() + " - " + list.get(i).getDay();
     }
 
     public String getName(int i) {
