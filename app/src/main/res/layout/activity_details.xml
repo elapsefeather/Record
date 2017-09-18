@@ -48,7 +48,7 @@
                 android:dropDownVerticalOffset="@dimen/details_spinner_drop" />
 
             <TextView
-                android:layout_width="30dp"
+                android:layout_width="10dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/details_line_marign"
                 android:layout_weight="1"
