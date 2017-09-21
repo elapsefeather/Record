@@ -5,9 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
+import feather.record.Data.ChartInfo;
 import feather.record.Data.EnterInfo;
 
 /**
@@ -82,6 +84,34 @@ public class DB_Helper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public ChartInfo chart_select(String item, String month, String year) {
+        Log.i("chart_select", "month = " + month + " item = " + item);
+//        ArrayList<ChartInfo> chart_list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("select " + MAONEY + " from " + TABLE_NAME +
+                " where  " + YEAR + " = ? and " + MONTH + " = ? and " + ITEM + " = ? ", new String[]{year, month, item});
+//        總數量
+        int rows_num = c.getCount();
+
+        ChartInfo info = new ChartInfo();
+        info.setMonth(month);
+        info.setItem(item);
+        int money = 0;
+        if (rows_num == 0) {
+            info.setMoney("0");
+        } else {
+//        必須先移到第一個才能開始列表
+            c.moveToFirst();
+            for (int x = 0; x < rows_num; x++) {
+                money += Integer.parseInt(c.getString(0));
+                c.moveToNext();
+            }
+            info.setMoney("" + money);
+        }
+        Log.i("chart_select", "getMoney = " + info.getMoney());
+        return info;
+    }
+
     public ArrayList<EnterInfo> Select(String Year, String Month) {
 
         ArrayList<EnterInfo> select_list = new ArrayList<>();
@@ -90,11 +120,6 @@ public class DB_Helper extends SQLiteOpenHelper {
 //        字寫 sql 語法
         Cursor c = db.rawQuery("select * from " + TABLE_NAME +
                 " where " + YEAR + " = ? and " + MONTH + " = ? ", new String[]{Year, Month});
-//        Cursor c = db.query(TABLE_NAME,
-////                                欄位
-//                new String[]{ID_FIELD, ITEM, YEAR, MONTH, DAY, NAME, OPTION, MAONEY, NOTE},
-////                                  where、 where條件、groupBy、having與 orderBy
-//                YEAR +"=" +Year ,null , null, null, null, null);
 //        總數量
         int rows_num = c.getCount();
 
