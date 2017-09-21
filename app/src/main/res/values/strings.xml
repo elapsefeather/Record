@@ -4,7 +4,7 @@
     <!-- logoin -->
     <string name="login_remuber">記住帳密</string>
     <string name="login_auto">自動登入</string>
-    
+
     <!-- main -->
     <string name="main_cost">成本</string>
     <string name="main_earn">收入</string>
@@ -38,6 +38,9 @@
     <string name="details_item_note">備註：</string>
     <string name="details_nodata">尚無資料</string>
     <string name="title_activity_login">Sign in</string>
+
+    <!-- chart -->
+    <string name="chart_year">年份：</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

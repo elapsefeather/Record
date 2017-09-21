@@ -24,5 +24,8 @@
     <color name="details_item_cost">#ed3a3a</color>
     <color name="details_item_earn">#2b4caf</color>
 
+    <!-- chart -->
+    <color name="chart_textcolor">#000000</color>
+
 </resources>
 
