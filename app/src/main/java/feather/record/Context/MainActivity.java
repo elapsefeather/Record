@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
+import feather.record.Context.Chart.ChartActivity;
 import feather.record.Context.Details.DetailsActivity;
 import feather.record.Context.Login.LoginActivity;
 import feather.record.Other.API;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     LinearLayout earn, cost, details, chart, logout;
 
-//    SQLite
+    //    SQLite
     public static DB_Helper helper;
 
     //    firebase database
@@ -89,7 +90,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.main_chart:
-
+                Intent chart = new Intent(this, ChartActivity.class);
+                startActivity(chart);
                 break;
             case R.id.main_logout:
 
