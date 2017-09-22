@@ -1,5 +1,6 @@
 package feather.record.Context.Details;
 
+import android.content.ContentValues;
 import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
@@ -49,8 +50,20 @@ public class DetilsModel {
 
         list.clear();
         Log.i("getData", "year_item = " + year_item + " month_item = " + month_item);
-        list = MainActivity.helper.Select(year_item, month_item);
-        Log.i("getData","list = " + list);
+        list = MainActivity.helper.Details_Select(year_item, month_item);
+        Log.i("getData", "list = " + list);
+    }
+
+    public void detils_delect(int i) {
+        //  用項目獲取 id 刪除項目
+        String id = String.valueOf(list.get(i).getId());
+//        進行資料庫刪除動作
+        MainActivity.helper.details_delect(id);
+    }
+
+    public void detils_update(int i, ContentValues values) {
+        String id = String.valueOf(list.get(i).getId());
+        MainActivity.helper.details_update(id, values);
     }
 
 }

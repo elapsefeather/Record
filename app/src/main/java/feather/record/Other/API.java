@@ -6,6 +6,6 @@ package feather.record.Other;
 
 public class API {
 
-    public static String firebase_data = "https://firebaseio.com/";
+    public static String firebase_data = "https://record-41a2f.firebaseio.com/";
 
 }

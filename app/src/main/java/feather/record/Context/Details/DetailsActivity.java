@@ -1,8 +1,10 @@
 package feather.record.Context.Details;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import feather.record.Context.MainActivity;
 import feather.record.R;
@@ -19,6 +23,7 @@ public class DetailsActivity extends AppCompatActivity {
     Spinner spinner_year, spinner_month;
     ExpandableListView exlistview;
     TextView nodata;
+    ArrayList<String> edit_item;
 
     DetailsPresenter detailsPresenter;
     ProgressDialog progressDialog;
@@ -69,7 +74,6 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
-
         spinner_month = (Spinner) findViewById(R.id.details_spinner_month);
         spinner_month.setAdapter(detailsPresenter.monthAdapter);
         spinner_month.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -94,9 +98,73 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
+        edit_item = new ArrayList<>();
+        edit_item.add(getString(R.string.edit_item_update));
+        edit_item.add(getString(R.string.edit_item_delect));
+
         exlistview = (ExpandableListView) findViewById(R.id.details_exlistview);
         exlistview.setAdapter(detailsPresenter.detilsAdapter);
+        exlistview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int i, long id) {
+//                長按項目 修改、
+                new AlertDialog.Builder(DetailsActivity.this)
+                        .setItems(edit_item.toArray(new String[edit_item.size()]), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String name = edit_item.get(which);
+                                switch (which) {
+                                    case 0:
+//                                                                      修改
+                                        update_item(i);
+                                        break;
+                                    case 1:
+//                                                                      刪除
+                                        delete_item(i);
+                                        break;
+                                }
+                            }
+                        })
+                        .show();
+                return false;
+            }
+        });
+    }
 
+    public void update_item(int i) {
+
+
+
+    }
+
+    public void delete_item(final int i) {
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                Log.i("notify", "onPreExecute");
+                progressStart();
+//                              進行刪除
+                detailsPresenter.detils_delete(i);
+            }
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                Log.i("notify", "doInBackground");
+//                              重新撈取資料
+                detailsPresenter.getData();
+                return null;
+            }
+
+            protected void onPostExecute(Void i) {
+                super.onPostExecute(i);
+                Log.i("notify", "onPostExecute");
+//                              刷新資料
+                detailsPresenter.notifyData();
+                progressStop();
+            }
+        }.execute(null, null, null);
     }
 
     public void getfirstdata() {
@@ -133,7 +201,7 @@ public class DetailsActivity extends AppCompatActivity {
         //        預設 year
 //        spinner_year.setSelection(2, false);
         for (int i = 0; i < detailsPresenter.detilsModel.year.size(); i++) {
-            if (YY.equals( detailsPresenter.detilsModel.year.get(i))) {
+            if (YY.equals(detailsPresenter.detilsModel.year.get(i))) {
                 spinner_year.setSelection(i, false);
                 detailsPresenter.detilsModel.year_item = YY;
                 Log.i("spinner", "spinner_year.setSelection =  " + i);
@@ -142,7 +210,7 @@ public class DetailsActivity extends AppCompatActivity {
         }
         //        預設 month
         for (int i = 0; i < detailsPresenter.detilsModel.month.size(); i++) {
-            if (MM.equals( detailsPresenter.detilsModel.month.get(i))) {
+            if (MM.equals(detailsPresenter.detilsModel.month.get(i))) {
                 spinner_month.setSelection(i, false);
                 detailsPresenter.detilsModel.month_item = MM;
                 Log.i("spinner", "spinner_month.setSelection =  " + i);

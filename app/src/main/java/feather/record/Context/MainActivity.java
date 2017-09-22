@@ -73,13 +73,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.main_earn:
 
-                Intent earn_dialog = new Intent(this, EarnDialog.class);
+                Intent earn_dialog = new Intent(this, EnterDialog.class);
+                earn_dialog.putExtra("type", "earn");
                 startActivity(earn_dialog);
 
                 break;
             case R.id.main_cost:
 
-                Intent cost_dialog = new Intent(this, CostDialog.class);
+                Intent cost_dialog = new Intent(this, EnterDialog.class);
+                cost_dialog.putExtra("type", "cost");
                 startActivity(cost_dialog);
 
                 break;

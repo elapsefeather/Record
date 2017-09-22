@@ -47,12 +47,11 @@ public class DetailsPresenter {
 
     public void notifyData() {
         Log.i("notify", "notifyData");
-        if(detilsModel.list.size()==0){
+        if (detilsModel.list.size() == 0) {
             detilsActivity.exlistview.setVisibility(View.INVISIBLE);
             detilsActivity.nodata.setVisibility(View.VISIBLE);
 
-        }else
-        {
+        } else {
             detilsActivity.exlistview.setVisibility(View.VISIBLE);
             detilsActivity.nodata.setVisibility(View.INVISIBLE);
 
@@ -60,4 +59,9 @@ public class DetailsPresenter {
             detilsAdapter.notifyDataSetChanged();
         }
     }
+
+    public void detils_delete(int i) {
+        detilsModel.detils_delect(i);
+    }
+
 }

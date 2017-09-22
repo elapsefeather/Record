@@ -109,10 +109,14 @@ public class DB_Helper extends SQLiteOpenHelper {
             info.setMoney("" + money);
         }
         Log.i("chart_select", "getMoney = " + info.getMoney());
+
+        //              每次都要記得關閉
+        db.close();
+
         return info;
     }
 
-    public ArrayList<EnterInfo> Select(String Year, String Month) {
+    public ArrayList<EnterInfo> Details_Select(String Year, String Month) {
 
         ArrayList<EnterInfo> select_list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -144,11 +148,31 @@ public class DB_Helper extends SQLiteOpenHelper {
 //            需要自己換下筆資料
             c.moveToNext();
         }
+
+        //              每次都要記得關閉
+        db.close();
         return select_list;
     }
 
-    public void Delete() {
+    public void details_delect(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
+//                                                                   資料表        條件    條件項目
+        int result = db.delete(TABLE_NAME, ID_FIELD + " = ? ", new String[]{id});
+        //              每次都要記得關閉
+        db.close();
+    }
+
+    public void details_update(String id,  ContentValues values ) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.update(TABLE_NAME, values, ID_FIELD + " = ? ", new String[]{id});
+        //              每次都要記得關閉
+        db.close();
+    }
+
+    public void Delete_DB() {
+        SQLiteDatabase db = this.getWritableDatabase();
+//                                                                   資料表        條件    條件項目
         int result = db.delete(TABLE_NAME, null, null);
         db.close();
     }

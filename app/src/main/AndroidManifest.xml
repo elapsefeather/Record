@@ -26,10 +26,11 @@
             android:name=".Context.CostDialog"
             android:theme="@android:style/Theme.Dialog" />
         <activity
-            android:name=".Context.EarnDialog"
+            android:name=".Context.EnterDialog"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".Context.Details.DetailsActivity" />
-        <activity android:name=".Context.MainActivity"/>
+        <activity android:name=".Context.MainActivity" />
+        <activity android:name=".Context.Chart.ChartActivity"></activity>
     </application>
 
 </manifest>

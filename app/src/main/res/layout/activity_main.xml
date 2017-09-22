@@ -7,13 +7,12 @@
     android:orientation="vertical"
     android:padding="@dimen/view_margin"
     tools:context="feather.record.Context.MainActivity">
+    <!-- 2 * 2 * 1 欄位 -->
 
-
-    <!-- ２．２．１ -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -65,15 +64,13 @@
                 android:textColor="@color/main_textcolor"
                 android:textSize="@dimen/main_textsize" />
         </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:orientation="horizontal">
-
         <LinearLayout
             android:id="@+id/main_details"
             android:layout_width="30dp"
@@ -98,13 +95,12 @@
                 android:textColor="@color/main_textcolor"
                 android:textSize="@dimen/main_textsize" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/main_chart"
             android:layout_width="30dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/main_btn_margin"
             android:layout_weight="1"
+            android:layout_margin="@dimen/main_btn_margin"
             android:background="@drawable/main_btn_rectangle"
             android:gravity="center_vertical|center_horizontal"
             android:orientation="vertical">
@@ -128,9 +124,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:orientation="horizontal">
-
         <LinearLayout
             android:id="@+id/main_logout"
             android:layout_width="30dp"
@@ -139,7 +134,7 @@
             android:layout_weight="1"
             android:background="@drawable/main_btn_rectangle"
             android:gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="@dimen/main_image_wh"
@@ -148,7 +143,7 @@
                 android:background="@mipmap/main_logout" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="@string/main_logout"

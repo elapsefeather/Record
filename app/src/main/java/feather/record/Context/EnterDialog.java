@@ -2,6 +2,8 @@ package feather.record.Context;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,9 +18,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import feather.record.Data.EnterInfo;
+import feather.record.Other.DB_Helper;
 import feather.record.R;
 
-public class CostDialog extends Activity implements View.OnClickListener {
+public class EnterDialog extends Activity implements View.OnClickListener {
 
     //元件
     TextView date;
@@ -27,23 +30,40 @@ public class CostDialog extends Activity implements View.OnClickListener {
     Spinner option;
     String name = "";
     String notest, moneyst;
-
     //日期
-    String yy = "", mm = "", dd = "", setdate = "";
+    String yy = "", mm = "", dd = "", setdate = "", type = "";
     int yi, di, mi;
 
     //spinner
     int sp;
-    String[] option_list = {"進貨", "台租"};
+    String[] earn_list = {"開箱", "增資"};
+    String[] cost_list = {"進貨", "台租"};
+    String[] use_list = new String[]{};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_cost);
+        setContentView(R.layout.dialog_earn);
+
+        Intent intent = this.getIntent();
+        type = intent.getStringExtra("type");
+
+        setType();
         ReadUserInfo();
         init();
 
+    }
+
+    public void setType() {
+        switch (type) {
+            case "cost":
+                use_list = cost_list;
+                break;
+            case "earn":
+                use_list = earn_list;
+                break;
+        }
     }
 
     public void init() {
@@ -56,20 +76,20 @@ public class CostDialog extends Activity implements View.OnClickListener {
         mi = Integer.parseInt(mm) - 1;
         di = Integer.parseInt(dd);
 
-        date = (TextView) findViewById(R.id.dialog_cost_date);
+        date = (TextView) findViewById(R.id.dialog_earn_date);
         date.setText(MainActivity.today);
         date.setOnClickListener(this);
 
-        money = (EditText) findViewById(R.id.dialog_cost_money);
-        nameed = (EditText) findViewById(R.id.dialog_cost_name);
+        money = (EditText) findViewById(R.id.dialog_earn_money);
+        nameed = (EditText) findViewById(R.id.dialog_earn_name);
         nameed.setText(name);
         nameed.setEnabled(false);
-        note = (EditText) findViewById(R.id.dialog_cost_note);
+        note = (EditText) findViewById(R.id.dialog_earn_note);
 
-        check = (Button) findViewById(R.id.dialog_cost_check);
+        check = (Button) findViewById(R.id.dialog_earn_check);
         check.setOnClickListener(this);
 
-        option = (Spinner) findViewById(R.id.dialog_cost_option_sp);
+        option = (Spinner) findViewById(R.id.dialog_earn_option_sp);
         option.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -85,7 +105,7 @@ public class CostDialog extends Activity implements View.OnClickListener {
 
             }
         });
-        ArrayAdapter<String> spadapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, option_list);
+        ArrayAdapter<String> spadapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, use_list);
         spadapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         option.setAdapter(spadapter);
 
@@ -94,8 +114,7 @@ public class CostDialog extends Activity implements View.OnClickListener {
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
 
         @Override
-        public void onDateSet(DatePicker view, int year, int month,
-                              int day) {
+        public void onDateSet(DatePicker view, int year, int month, int day) {
             yy = String.valueOf(year);
             mm = String.valueOf(month + 1);
             dd = String.valueOf(day);
@@ -116,21 +135,24 @@ public class CostDialog extends Activity implements View.OnClickListener {
         int id = v.getId();
         switch (id) {
 
-            case R.id.dialog_cost_date:
+            case R.id.dialog_earn_date:
 
                 new DatePickerDialog(this, d, yi, mi, di).show();
 
                 break;
-            case R.id.dialog_cost_check:
+            case R.id.dialog_earn_check:
 
                 moneyst = money.getText().toString().trim();
                 notest = note.getText().toString().trim();
                 if (!moneyst.equals("")) {
+                    Log.i("earn", "yy = " + yy);
+                    Log.i("earn", "mm = " + mm);
+                    Log.i("earn", "dd = " + dd);
+                    Log.i("earn", "moneyst = " + moneyst);
                     MainActivity.helper.Add(
-                            "cost", yy, mm, dd, name, option_list[sp], moneyst, notest);
+                            "earn", yy, mm, dd, name, use_list[sp], moneyst, notest);
                 }
                 finish();
-
                 break;
         }
     }
@@ -142,5 +164,4 @@ public class CostDialog extends Activity implements View.OnClickListener {
         name = sharedata.getString("name", "");
         Log.d("setup", "read name = " + name);
     }
-
 }

@@ -38,6 +38,8 @@
     <string name="details_item_note">備註：</string>
     <string name="details_nodata">尚無資料</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="edit_item_update">修改項目</string>
+    <string name="edit_item_delect">刪除項目</string>
 
     <!-- chart -->
     <string name="chart_year">年份：</string>
