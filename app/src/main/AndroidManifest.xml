@@ -23,9 +23,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Context.CostDialog"
-            android:theme="@android:style/Theme.Dialog" />
-        <activity
             android:name=".Context.EnterDialog"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".Context.Details.DetailsActivity" />
