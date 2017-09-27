@@ -2,6 +2,7 @@ package feather.record.Context.Details;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -15,7 +16,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import feather.record.Context.EnterDialog;
 import feather.record.Context.MainActivity;
+import feather.record.Data.EnterInfo;
 import feather.record.R;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -41,7 +44,6 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     public void init() {
-
         detailsPresenter = new DetailsPresenter(this);
         detailsPresenter.detilsModel.year_item = MainActivity.yy;
         detailsPresenter.detilsModel.month_item = MainActivity.mm;
@@ -132,8 +134,20 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     public void update_item(int i) {
-
-
+        EnterInfo info = detailsPresenter.detilsModel.list.get(i);
+        Intent change = new Intent(this, EnterDialog.class);
+        change.putExtra("id", info.getId());
+        Log.i("enter", "id = " + info.getId());
+        change.putExtra("change", 1);
+        change.putExtra("type", info.getItem());
+        change.putExtra("year", info.getYear());
+        change.putExtra("month", info.getMonth());
+        change.putExtra("day", info.getDay());
+        change.putExtra("name", info.getName());
+        change.putExtra("option", info.getOption());
+        change.putExtra("money", info.getMoney());
+        change.putExtra("note", info.getNote());
+        startActivity(change);
 
     }
 
@@ -199,7 +213,6 @@ public class DetailsActivity extends AppCompatActivity {
 
     public void setSelction() {
         //        預設 year
-//        spinner_year.setSelection(2, false);
         for (int i = 0; i < detailsPresenter.detilsModel.year.size(); i++) {
             if (YY.equals(detailsPresenter.detilsModel.year.get(i))) {
                 spinner_year.setSelection(i, false);
@@ -232,4 +245,12 @@ public class DetailsActivity extends AppCompatActivity {
             }
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        detailsPresenter.getData();
+        detailsPresenter.notifyData();
+        Log.i("details", "onResume");
+    }
+
 }

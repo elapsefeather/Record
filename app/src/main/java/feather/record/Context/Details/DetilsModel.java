@@ -61,9 +61,4 @@ public class DetilsModel {
         MainActivity.helper.details_delect(id);
     }
 
-    public void detils_update(int i, ContentValues values) {
-        String id = String.valueOf(list.get(i).getId());
-        MainActivity.helper.details_update(id, values);
-    }
-
 }

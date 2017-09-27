@@ -17,8 +17,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import feather.record.Data.EnterInfo;
-import feather.record.Other.DB_Helper;
 import feather.record.R;
 
 public class EnterDialog extends Activity implements View.OnClickListener {
@@ -28,11 +26,11 @@ public class EnterDialog extends Activity implements View.OnClickListener {
     EditText money, note, nameed;
     Button check;
     Spinner option;
-    String name = "";
+    String name = "",optionst, type = "", DB_id = "";
     String notest, moneyst;
     //日期
-    String yy = "", mm = "", dd = "", setdate = "", type = "";
-    int yi, di, mi;
+    String yy = "", mm = "", dd = "", setdate = "";
+    int yi, di, mi, change = 0;
 
     //spinner
     int sp;
@@ -44,14 +42,48 @@ public class EnterDialog extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_earn);
+        setContentView(R.layout.dialog_enter);
 
         Intent intent = this.getIntent();
         type = intent.getStringExtra("type");
+//                  0 = 新增，1 = 更新
+        change = intent.getIntExtra("change", 0);
 
         setType();
         ReadUserInfo();
         init();
+        if (change == 1) {
+            DB_id = intent.getStringExtra("id");
+            yy=intent.getStringExtra("year");
+            mm=intent.getStringExtra("month");
+            dd=intent.getStringExtra("day");
+//            name=intent.getStringExtra("name");
+            optionst=intent.getStringExtra("option");
+            moneyst=intent.getStringExtra("money");
+            notest=intent.getStringExtra("note");
+            setInfo();
+        }
+    }
+
+    public void setInfo() {
+
+        yi = Integer.parseInt(yy);
+        mi = Integer.parseInt(mm) - 1;
+        di = Integer.parseInt(dd);
+
+        for (int i = 0; i <use_list.length; i++) {
+            if (option.equals(use_list[i])) {
+                option.setSelection(i, false);
+                Log.i("spinner", "spinner_year.setSelection =  " + i);
+                break;
+            }
+        }
+
+        setdate = yy + "-" + mm + "-" + dd;
+        date.setText(setdate);
+
+        money.setText(moneyst);
+        note.setText(notest);
 
     }
 
@@ -145,15 +177,25 @@ public class EnterDialog extends Activity implements View.OnClickListener {
                 moneyst = money.getText().toString().trim();
                 notest = note.getText().toString().trim();
                 if (!moneyst.equals("")) {
-                    Log.i("earn", "yy = " + yy);
-                    Log.i("earn", "mm = " + mm);
-                    Log.i("earn", "dd = " + dd);
-                    Log.i("earn", "moneyst = " + moneyst);
-                    MainActivity.helper.Add(
-                            "earn", yy, mm, dd, name, use_list[sp], moneyst, notest);
+                    Log.i("enter", "yy = " + yy);
+                    Log.i("enter", "mm = " + mm);
+                    Log.i("enter", "dd = " + dd);
+                    Log.i("enter", "moneyst = " + moneyst);
+                    switch (change) {
+                        case 0:
+//                                  新增
+                            Log.i("enter", "new ");
+                            MainActivity.helper.Add(type, yy, mm, dd, name, use_list[sp], moneyst, notest);
+                            break;
+                        case 1:
+//                                  更新
+                            Log.i("enter", "update ");
+                            MainActivity.helper.details_update(DB_id, type, yy, mm, dd, name, use_list[sp], moneyst, notest);
+                            break;
+                    }
+                    finish();
+                    break;
                 }
-                finish();
-                break;
         }
     }
 

@@ -6,14 +6,13 @@ package feather.record.Data;
 
 public class EnterInfo {
 
-    String item, year, month, day, name, option, money, note;
-    long id;
+    String id, item, year, month, day, name, option, money, note;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

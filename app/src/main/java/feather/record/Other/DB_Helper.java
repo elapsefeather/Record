@@ -66,6 +66,7 @@ public class DB_Helper extends SQLiteOpenHelper {
 
     public void Add(String item, String year, String month, String day,
                     String name, String option, String money, String note) {
+        Log.i("enter", "add ");
 //              增加
         SQLiteDatabase db = this.getWritableDatabase();
 //              建值
@@ -117,7 +118,7 @@ public class DB_Helper extends SQLiteOpenHelper {
     }
 
     public ArrayList<EnterInfo> Details_Select(String Year, String Month) {
-
+        Log.i("enter", "select ");
         ArrayList<EnterInfo> select_list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 //        資料表
@@ -134,7 +135,7 @@ public class DB_Helper extends SQLiteOpenHelper {
         for (int x = 0; x < rows_num; x++) {
             EnterInfo info = new EnterInfo();
 //            按照查詢順序
-            info.setId(c.getLong(0));
+            info.setId(c.getString(0));
             info.setItem(c.getString(1));
             info.setYear(c.getString(2));
             info.setMonth(c.getString(3));
@@ -155,6 +156,7 @@ public class DB_Helper extends SQLiteOpenHelper {
     }
 
     public void details_delect(String id) {
+        Log.i("enter", "delect ");
         SQLiteDatabase db = this.getWritableDatabase();
 //                                                                   資料表        條件    條件項目
         int result = db.delete(TABLE_NAME, ID_FIELD + " = ? ", new String[]{id});
@@ -162,10 +164,23 @@ public class DB_Helper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void details_update(String id,  ContentValues values ) {
-
+    public void details_update(String id, String item, String year, String month, String day,
+                               String name, String option, String money, String note) {
+        Log.i("enter", "update id = " + id);
         SQLiteDatabase db = this.getWritableDatabase();
-        db.update(TABLE_NAME, values, ID_FIELD + " = ? ", new String[]{id});
+        //              建值
+        ContentValues values = new ContentValues();
+        values.put(ITEM, item);
+        values.put(YEAR, year);
+        values.put(MONTH, month);
+        values.put(DAY, day);
+        values.put(NAME, name);
+        values.put(OPTION, option);
+        values.put(MAONEY, money);
+        values.put(NOTE, note);
+
+        long re = db.update(TABLE_NAME, values, ID_FIELD + " = ? ", new String[]{id});
+        Log.i("enter", "db.update = " + re);
         //              每次都要記得關閉
         db.close();
     }
